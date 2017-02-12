@@ -1,0 +1,212 @@
+<section>  
+    <div class="container">
+        <div class="col-lg-12 text-center">
+            <h2 class="section-heading" style="padding-top:30px">Search Results</h2>
+        </div>
+
+		<!-- CAR TABLE RESULTS -->
+		<h3>Cars Results</h3>
+		<div ng-show="!showCars">
+		  NO RESULTS MATCHED
+		</div>
+		<div>
+		<table class="table table-hover center-block table-condensed" style="width:200%" ng-show="showCars">
+		    <thead>
+		        <tr>
+		            <th class="col-md-1" style="width:30%">
+		                Picture
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/cars" ng-click="sortType = 'make'; sortReverse = !sortReverse">
+		                     Make
+		                    <span ng-show="sortType =='make' && !sortReverse" class="fa fa-car250down"></span>
+		                    <span ng-show="sortType =='make' &&  sortReverse" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/cars" ng-click="sortType = 'model'; sortReverse = !sortReverse">
+		                     Model
+		                    <span ng-show="sortType =='model' && !sortReverse" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortType =='model' &&  sortReverse" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/cars" ng-click="sortType = 'year'; sortReverse = !sortReverse">
+		                      Year
+		                    <span ng-show="sortType =='year' && !sortReverse" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortType =='year' &&  sortReverse" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/cars" ng-click="sortType = 'price'; sortReverse = !sortReverse">
+		                     Price
+		                    <span ng-show="sortType =='price' && !sortReverse" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortType =='price' &&  sortReverse" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/cars" ng-click="sortType = 'horsepower'; sortReverse = !sortReverse">
+		                      Horsepower
+		                    <span ng-show="sortType =='safety' && !sortReverse" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortType =='safety' &&  sortReverse" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		        </tr>
+		    </thead>
+		    <tbody>           
+		        <tr dir-paginate="car in searchQuery.cars | orderBy:sortType:sortReverse | itemsPerPage:4" pagination-id="a" data-target="{{car.dataTarget}}" class="cars-link" data-toggle="modal" ng-click="goToCar(car)">
+		            <td><img ng-src='{{car.img_url}}' class="img-responsive" alt=""> </td>
+		            <td ng-show="contains(car.matched_terms,4)" style="color:red"><b>{{car.make}}</b></td>
+		            <td ng-show="!contains(car.matched_terms,4)">{{car.make}}</td>
+
+		            <td ng-show="contains(car.matched_terms,7)" style="color:red"><b>{{car.model}}</b></td>
+		            <td ng-show="!contains(car.matched_terms,7)">{{car.model}}</td>
+
+		            <td ng-show="contains(car.matched_terms,10)" style="color:red"><b>{{car.year}}</b></td>
+		            <td ng-show="!contains(car.matched_terms,10)">{{car.year}}</td>
+
+		            <td ng-show="contains(car.matched_terms,9)" style="color:red"><b>${{car.price|number:2}}</b></td>
+		            <td ng-show="!contains(car.matched_terms,9)">${{car.price|number:2}}</td>
+		            <!-- MISSING THIS SEARCH -->
+		            <td ng-show="contains(car.matched_terms,1)" style="color:red"><b>{{car.horsepower}}</b></td>
+		            <td ng-show="!contains(car.matched_terms,1)">{{car.horsepower}}</td>
+
+
+		        </tr>
+		    </tbody>
+		</table><dir-pagination-controls pagination-id="a" max-size="7" direction-links="true" boundary-links="true"></dir-pagination-controls></div>
+
+		<!--MAN Table Section-->
+		<h3>Manufacturers Results</h3>
+		<div ng-show="!showMans">
+		  NO RESULTS MATCHED
+		</div>
+		<div>
+		<table class="table table-hover center-block table-condensed" style="width:500%" ng-show="showMans">
+		    <thead>
+		        <tr>              
+		            <th class="col-md-3" style="width:30">
+		                Picture
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/mans" ng-click="sortTypeMan = 'name'; sortReverseMan = !sortReverseMan">
+		                    Name
+		                    <span ng-show="sortTypeMan =='name' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='name' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/mans" ng-click="sortTypeMan = 'avg_price'; sortReverseMan = !sortReverseMan">
+		                     Average Price
+		                    <span ng-show="sortTypeMan =='country' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='country' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/mans" ng-click="sortTypeMan = 'avg_horsepower'; sortReverseMan = !sortReverseMan">
+		                     Average Horsepower
+		                    <span ng-show="sortTypeMan =='avgSafety' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='avgSafety' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/mans" ng-click="sortTypeMan = 'max_car'; sortReverseMan = !sortReverseMan">
+		                      Most Expensive Car
+		                    <span ng-show="sortTypeMan =='max_car' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='max_car' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-1">
+		                <a class="column" href="#/mans" ng-click="sortTypeMan = 'num_models'; sortReverseMan = !sortReverseMan">
+		                     Number of Models
+		                    <span ng-show="sortTypeMan =='modelsNum' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='modelsNum' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		        </tr>
+		    </thead>
+		    <tbody>           
+		        <tr dir-paginate="man in searchQuery.manufacturers | orderBy:sortTypeMan:sortReverseMan | itemsPerPage:4" pagination-id="b" data-target="{{man.dataTarget}}" class="cars-link" data-toggle="modal" ng-click="goToMan(man)">
+
+		            <td><img ng-src='{{man.img_url}}' class="img-responsive  img.manufacturer"  alt=""> </td>
+		            <td ng-show="contains(man.matched_terms,7)" style="color:red"><b>{{man.name}}</td>
+		            <td ng-show="!contains(man.matched_terms,7)" >{{man.name}}</td>
+
+		            <td ng-show="contains(man.matched_terms,1)" style="color:red"><b>{{man.avg_price|number:2}}</td>
+		            <td ng-show="!contains(man.matched_terms,1)" >{{man.avg_price|number:2}}</td>
+
+		            <td ng-show="contains(man.matched_terms,0)" style="color:red"><b>{{man.avg_horsepower|number:2}}</td>
+		            <td ng-show="!contains(man.matched_terms,0)" >{{man.avg_horsepower|number:2}}</td>
+
+		            <td ng-show="contains(man.matched_terms,5)" style="color:red"><b>{{man.max_car}}</td>
+		            <td ng-show="!contains(man.matched_terms,5)" >{{man.avg_price|number:2}}</td>
+
+		            <td ng-show="contains(man.matched_terms,9)" style="color:red"><b>{{man.num_models}}</td>
+		            <td ng-show="!contains(man.matched_terms,9)" >{{man.num_models}}</td>
+		        </tr>
+		    </tbody>
+		</table><dir-pagination-controls pagination-id="b" max-size="7" direction-links="true" boundary-links="true"></dir-pagination-controls></div>
+
+		<!--Engine Table Section-->
+		<h3>Engine Results</h3>
+		<div ng-show="!showEngines">
+		  NO RESULTS MATCHED
+		</div>
+		<div>
+		<table class="table table-hover center-block table-condensed" style="width:500%" ng-show="showEngines">
+		    <thead>
+		        <tr>           
+		            <th class="col-md-3" style="width:30">
+		                Name
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/engines" ng-click="sortTypeMan = 'name'; sortReverseMan = !sortReverseMan">
+		                    Cylinder
+		                    <span ng-show="sortTypeMan =='name' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='name' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/engines" ng-click="sortTypeMan = 'avg_price'; sortReverseMan = !sortReverseMan">
+		                     Horsepower
+		                    <span ng-show="sortTypeMan =='country' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='country' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/engines" ng-click="sortTypeMan = 'avg_horsepower'; sortReverseMan = !sortReverseMan">
+		                     Torque
+		                    <span ng-show="sortTypeMan =='avgSafety' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='avgSafety' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		            <th class="col-md-2">
+		                <a class="column" href="#/engines" ng-click="sortTypeMan = 'avg_price'; sortReverseMan = !sortReverseMan">
+		                      Fuel Type
+		                    <span ng-show="sortTypeMan =='avgPrice' && !sortReverseMan" class="fa fa-caret-down"></span>
+		                    <span ng-show="sortTypeMan =='avgPrice' &&  sortReverseMan" class="fa fa-caret-up"></span>
+		                </a>
+		            </th>
+		        </tr>
+		    </thead>
+		    <tbody>           
+		        <tr dir-paginate="engine in searchQuery.engines | orderBy:sortTypeMan:sortReverseMan | itemsPerPage:3" pagination-id="c" data-target="{{engine.dataTarget}}" class="cars-link" data-toggle="modal" ng-click="goToEngine(engine)">	            
+		            <td ng-show="contains(engine.matched_terms,5)" style="color:red"><b>{{engine.name}}</b></td>
+		            <td ng-show="!contains(engine.matched_terms,5)">{{engine.name}}</td>
+
+		            <td ng-show="contains(engine.matched_terms,0)" style="color:red"><b>{{engine.cylinder}}</b></td>
+		            <td ng-show="!contains(engine.matched_terms,0)">{{engine.cylinder}}</td>
+
+		            <td ng-show="contains(engine.matched_terms,2)" style="color:red"><b>{{engine.horsepower}}</b></td>
+		            <td ng-show="!contains(engine.matched_terms,2)">{{engine.horsepower}}</td>
+		            
+					<td ng-show="contains(engine.matched_terms,7)" style="color:red"><b>{{engine.torque}}</b></td>
+		            <td ng-show="!contains(engine.matched_terms,7)">{{engine.torque}}</td>
+
+		            <td ng-show="contains(engine.matched_terms,1)" style="color:red"><b>{{engine.fuelType}}</b></td>
+		            <td ng-show="!contains(engine.matched_terms,1)">{{engine.fuelType}}</td>
+		        </tr>
+		    </tbody>
+		</table><dir-pagination-controls pagination-id="c" max-size="7" direction-links="true" boundary-links="true"></dir-pagination-controls></div>
+	</div>
+</section>

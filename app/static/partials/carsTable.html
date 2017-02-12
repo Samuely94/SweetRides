@@ -1,0 +1,90 @@
+<section>  
+    <div class="container">
+        <div class="col-lg-12 text-center">
+            <h2 class="section-heading" style="padding-top:30px">Cars</h2>
+            <h3 class="section-subheading text-muted">Check out our vast selection.</h3>
+        </div>
+
+      <table class="table table-hover center-block table-condensed" style="width:200%">
+            <thead>
+                <tr>
+                    <th class="col-md-1" style="width:30%">
+                        Picture
+                    </th>
+                    <th class="col-md-2">
+                        <a class="column" href="#/cars" ng-click="sortType = 'make'; sortReverse = !sortReverse">
+                             Make
+                            <span ng-show="sortType =='make' && !sortReverse" class="fa fa-car250down"></span>
+                            <span ng-show="sortType =='make' &&  sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
+                    <th class="col-md-2">
+                        <a class="column" href="#/cars" ng-click="sortType = 'model'; sortReverse = !sortReverse">
+                             Model
+                            <span ng-show="sortType =='model' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType =='model' &&  sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
+                    <th class="col-md-2">
+                        <a class="column" href="#/cars" ng-click="sortType = 'year'; sortReverse = !sortReverse">
+                              Year
+                            <span ng-show="sortType =='year' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType =='year' &&  sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
+                    <th class="col-md-2">
+                        <a class="column" href="#/cars" ng-click="sortType = 'price'; sortReverse = !sortReverse">
+                             Price
+                            <span ng-show="sortType =='price' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType =='price' &&  sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
+                    <th class="col-md-2">
+                        <a class="column" href="#/cars" ng-click="sortType = 'horsepower'; sortReverse = !sortReverse">
+                              Horsepower
+                            <span ng-show="sortType =='safety' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType =='safety' &&  sortReverse" class="fa fa-caret-up"></span>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>           
+                <tr dir-paginate="car in cars | orderBy:sortType:sortReverse | itemsPerPage:10" data-target="{{car.dataTarget}}" class="cars-link" data-toggle="modal" ng-click="goToCar(car)">
+                    <td><img ng-src='{{car.img_url}}' class="img-responsive" alt=""> </td>
+                    <td>{{car.make}}</td>
+                    <td>{{car.model}}</td>
+                    <td>{{car.year}}</td>
+                    <td>${{car.price|number:2}}</td>
+                    <td>{{car.horsepower}}</td>
+                </tr>
+            </tbody>
+    	
+        </table><dir-pagination-controls max-size="7" direction-links="true" boundary-links="true"></dir-pagination-controls>
+    </div>
+     <br>
+    <h2 align="center">ADVERTISEMENTS</h2>
+    <div class="row adverts">
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail" ng-click="goToCity(restaurant.city_id)">
+                <img ng-src='{{restaurant.image}}' class="img-responsive"  alt="">
+                <div class="caption">
+                    <h4><a href="">{{restaurant.name}}</a>
+                    </h4>
+                    <p>This {{restaurant.category}} is located at {{restaurant.address}}.</p>
+                    <p>Rating: {{restaurant.rating}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-lg-4 col-md-4">
+            <div class="thumbnail" ng-click="goToCity(attraction.city_id)">
+                <img ng-src='{{attraction.image}}' class="img-responsive"  alt="">
+                <div class="caption">
+                    <h4><a href="">{{attraction.name}}</a>
+                    </h4>
+                    <p>This {{attraction.category}} has {{attraction.num_reviews}} reviews.</p>
+                    <p>Rating: {{attraction.rating}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
